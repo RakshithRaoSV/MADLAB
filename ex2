@@ -1,0 +1,87 @@
+activity_main.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/etName"
+        android:hint="Enter Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/etRegNo"
+        android:hint="Enter Registration No"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/etDept"
+        android:hint="Enter Department"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:text="Submit"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvOutput"
+        android:text=""
+        android:textSize="16sp"
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+
+
+
+
+
+
+MainACtivity.java:
+
+package com.example.exo2;
+
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText etName, etRegNo, etDept;
+    Button btnSubmit;
+    TextView tvOutput;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main); // Link layout
+
+        // Link Java with layout views
+        etName = findViewById(R.id.etName);
+        etRegNo = findViewById(R.id.etRegNo);
+        etDept = findViewById(R.id.etDept);
+        btnSubmit = findViewById(R.id.btnSubmit);
+        tvOutput = findViewById(R.id.tvOutput);
+
+        // Set listener to handle button click
+        btnSubmit.setOnClickListener(v -> {
+            String name = etName.getText().toString();
+            String regNo = etRegNo.getText().toString();
+            String dept = etDept.getText().toString();
+
+            String result = "Name: " + name + "\nReg No: " + regNo + "\nDepartment: " + dept;
+            tvOutput.setText(result); // Show result
+        });
+    }
+}
