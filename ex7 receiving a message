@@ -1,0 +1,57 @@
+activity_main.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_show_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Receive Message" />
+</LinearLayout>
+
+
+
+
+MainActivity.java:
+
+package com.example.exo7;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    Button showMessageButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);  // Uses XML layout
+
+        showMessageButton = findViewById(R.id.btn_show_message);
+
+        showMessageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                receiveMessage("Hello! This is your alert message.");
+            }
+        });
+    }
+
+    // Function that simulates receiving a message and shows an alert
+    private void receiveMessage(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("New Message");
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", null);
+        builder.show();
+    }
+}
