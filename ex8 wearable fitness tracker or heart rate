@@ -1,0 +1,83 @@
+MainActivity.java
+
+package com.example.exo8;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    TextView tvStatus, tvHeartRate;
+    Button btnConnect;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);  // Make sure your XML file is named activity_main.xml
+
+        // Link UI components
+        tvStatus = findViewById(R.id.tvStatus);
+        tvHeartRate = findViewById(R.id.tvHeartRate);
+        btnConnect = findViewById(R.id.btnConnect);
+
+        // Button click listener
+        btnConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvStatus.setText("Connected to Heart Rate Monitor");
+                simulateHeartRate();
+            }
+        });
+    }
+
+    // Simulate receiving heart rate data after a short delay
+    private void simulateHeartRate() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int fakeHR = 60 + (int)(Math.random() * 40); // random HR between 60 and 100
+                tvHeartRate.setText("Heart Rate: " + fakeHR + " bpm");
+            }
+        }, 2000); // 2 second delay to simulate reading
+    }
+}
+
+
+---------------------------------------------------------------------------------
+
+xml file
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="30dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btnConnect"
+        android:text="Connect to HR Monitor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:text="Status: Not Connected"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvHeartRate"
+        android:text="Heart Rate: -- bpm"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
