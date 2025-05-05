@@ -1,0 +1,85 @@
+MainActivity.java
+
+package com.example.exo10;
+
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.osmdroid.api.IMapController;
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
+
+public class MainActivity extends AppCompatActivity {
+
+    MapView map;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Configuration.getInstance().setUserAgentValue(getPackageName());
+        setContentView(R.layout.activity_main);
+
+        map = findViewById(R.id.map);
+        map.setTileSource(TileSourceFactory.MAPNIK);
+        map.setMultiTouchControls(true);
+
+        IMapController mapController = map.getController();
+        mapController.setZoom(5.0);
+        GeoPoint startPoint = new GeoPoint(20.5937, 78.9629); // Center on India
+        mapController.setCenter(startPoint);
+
+        addEVStation("EV Station - Bangalore", 12.9716, 77.5946);
+        addEVStation("EV Station - Delhi", 28.6139, 77.2090);
+        addEVStation("EV Station - Mumbai", 19.0760, 72.8777);
+    }
+
+    private void addEVStation(String title, double lat, double lon) {
+        Marker marker = new Marker(map);
+        marker.setPosition(new GeoPoint(lat, lon));
+        marker.setTitle(title);
+        map.getOverlays().add(marker);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        map.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        map.onPause();
+    }
+}
+
+
+---------------------------------------------------------------------------------
+
+xml file
+
+<?xml version="1.0" encoding="utf-8"?>
+<org.osmdroid.views.MapView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/map"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+
+Manifest file
+
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+---------------------------------------------------------------------------------
+
+Build.gradle(app)
+
+dependencies {
+
+    ...
+    implementation 'org.osmdroid:osmdroid-android:6.1.16'
+}
+
